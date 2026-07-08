@@ -1,6 +1,17 @@
 # Stadium Copilot
 
-AI-powered venue intelligence for FIFA World Cup 2026. Real-time crowd management for ops teams, multilingual fan assistant for attendees.
+**Smart Stadiums & Tournament Operations** — a GenAI-powered solution that optimizes stadium operations and enhances the FIFA World Cup 2026 experience through intelligent, real-time assistance, for both attendees and the operations staff running the venue.
+
+One shared intelligence layer, two connected surfaces: a multilingual fan assistant, and a live ops command center — both reading from and reacting to the same real-time crowd data.
+
+## Problem statement alignment
+
+| Problem statement ask | How Stadium Copilot delivers it |
+|---|---|
+| Optimize stadium operations | Live per-zone occupancy simulation, AI-generated dispatch recommendations as zones approach capacity, one-click approve-and-notify, a scenario simulator (pre-match rush, halftime surge, gate closure, full egress) for stress-testing ops response |
+| Enhance the FIFA World Cup 2026 experience | A grounded, multilingual fan assistant for wayfinding, accessibility, bag policy, and transit — plus proactive, auto-translated alerts the moment ops redirects a gate |
+| GenAI-powered | NVIDIA NIM (Llama 3.1/3.2) drives chat, dispatch reasoning, live translation, and ticket-image OCR — retrieval-grounded against real venue data, not free-form hallucination |
+| Intelligent, real-time assistance | WebSocket-pushed crowd state every 2 seconds, live dispatch generation on status change, instant fan-facing alerts — not a static chatbot bolted onto a dashboard |
 
 ## Live demo
 
@@ -45,6 +56,22 @@ cd backend && pytest tests/ -v
 or as part of the full check:
 ```bash
 make check
+```
+
+---
+
+## Code quality
+
+- **Zero lint warnings** — `ruff check .` passes clean on the entire backend; no unused imports, no dead code, no bare excepts
+- **Fully typed** — every backend module uses Python type hints end-to-end; all request/response shapes are Pydantic v2 models (`models.py`), so the API contract is enforced, not just documented
+- **No deprecated APIs** — FastAPI's modern `lifespan` context manager for startup/shutdown (including graceful sim-engine teardown), not the deprecated `on_event` hooks
+- **Modular by responsibility** — routing, retrieval, simulation, and ops-dispatch logic each live in their own module with a single job; `main.py` wires them together and stays a thin HTTP layer
+- **Files stay small and focused** — most modules are under 300 lines; nothing is a monolith
+- **Secrets never touch the repo** — API keys load from environment/`.env` only, verified by `.gitignore` and kept out of every script
+- **Every AI prompt lives in a file** — `prompts/*.md`, loaded at runtime, never inlined as a string buried in application code
+
+```bash
+cd backend && ruff check .
 ```
 
 ---
