@@ -451,4 +451,14 @@ async def ws_fan(ws: WebSocket, venue_id: str, session_id: str):
 
 
 if STATIC_DIR.exists():
-    app.mount("/", StaticFiles(directory=str(STATIC_DIR), html=True), name="static")
+    # Serve built assets directly
+    app.mount("/assets", StaticFiles(directory=str(STATIC_DIR / "assets")), name="assets")
+
+    # SPA fallback: any non-API, non-WS path returns index.html so client-side
+    # routes like /fan and /ops (and iframe embeds) resolve instead of 404ing.
+    @app.get("/{full_path:path}")
+    async def spa_fallback(full_path: str):
+        candidate = STATIC_DIR / full_path
+        if full_path and candidate.is_file():
+            return FileResponse(str(candidate))
+        return FileResponse(str(STATIC_DIR / "index.html"))

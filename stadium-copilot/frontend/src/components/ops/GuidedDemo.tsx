@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { triggerScenario } from '../../lib/api'
-import { Play, X, ChevronRight } from 'lucide-react'
+import { Play, X } from 'lucide-react'
 
 interface Step {
   caption: string
@@ -80,8 +80,8 @@ export default function GuidedDemo({ venueId, onComplete }: Props) {
     return (
       <button
         onClick={runDemo}
-        className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold"
-        style={{ background: 'var(--accent)', color: '#fff', minHeight: 44 }}
+        className="pill px-4 py-2 text-sm font-bold pressable"
+        style={{ background: 'transparent', color: 'var(--accent)', border: '1px solid var(--accent)', minHeight: 40 }}
         aria-label="Run the 90-second guided demo"
       >
         <Play size={14} aria-hidden />
@@ -91,20 +91,20 @@ export default function GuidedDemo({ venueId, onComplete }: Props) {
   }
 
   return (
-    <div className="flex items-center gap-3 px-4 py-3 rounded-xl"
-      style={{ background: 'var(--surface)', border: '1px solid var(--accent)' }}>
-      <ChevronRight size={14} style={{ color: 'var(--accent)', flexShrink: 0 }} aria-hidden />
-      <p className="text-sm flex-1" style={{ color: 'var(--ink)' }}>{caption}</p>
+    <div className="flex items-center gap-3 px-4 py-2.5 rounded-xl glass animate-rise"
+      style={{ border: '1px solid var(--accent)', boxShadow: '0 0 24px rgba(56,189,248,0.18)', maxWidth: 460 }}>
+      <span className="livedot flex-shrink-0" style={{ color: 'var(--accent)' }} aria-hidden />
+      <p className="text-sm flex-1 font-medium" style={{ color: 'var(--ink)' }}>{caption}</p>
       <div className="flex gap-1" aria-hidden>
         {steps.map((_, i) => (
-          <div key={i} className="w-1.5 h-1.5 rounded-full"
-            style={{ background: i <= step ? 'var(--accent)' : 'var(--border)' }} />
+          <div key={i} className="h-1.5 rounded-full transition-all"
+            style={{ width: i === step ? 14 : 6, background: i <= step ? 'var(--accent)' : 'var(--border-strong)' }} />
         ))}
       </div>
       <button
         onClick={stop}
-        className="p-1 rounded"
-        style={{ color: 'var(--muted)', minHeight: 36, minWidth: 36, display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+        className="rounded-lg flex items-center justify-center pressable"
+        style={{ color: 'var(--muted)', height: 30, width: 30, background: 'var(--surface-2)' }}
         aria-label="Skip demo"
       >
         <X size={14} aria-hidden />

@@ -79,83 +79,96 @@ export default function TicketSnap({ onTicket }: Props) {
     <>
       <button
         onClick={() => setOpen(true)}
-        className="flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium"
+        className="pill px-3 py-2 text-xs font-semibold pressable"
         style={{
           background: 'var(--chip)',
           border: '1px solid var(--border)',
           color: 'var(--ink)',
-          minHeight: '44px',
+          minHeight: 40,
         }}
         aria-label="Snap your ticket to find your seat"
       >
-        <Camera size={15} aria-hidden />
+        <Camera size={14} style={{ color: 'var(--brand)' }} aria-hidden />
         Snap ticket
       </button>
 
       {open && (
         <div
-          className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-4"
-          style={{ background: 'rgba(0,0,0,0.5)' }}
+          className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-3 animate-fadein"
+          style={{ background: 'rgba(8,12,10,0.55)', backdropFilter: 'blur(4px)', WebkitBackdropFilter: 'blur(4px)' }}
           role="dialog"
           aria-modal="true"
           aria-label="Ticket scanner"
+          onClick={() => setOpen(false)}
         >
-          <div className="w-full max-w-sm rounded-2xl p-5"
-            style={{ background: 'var(--surface)', border: '1px solid var(--border)' }}>
-            <div className="flex justify-between items-center mb-4">
-              <h2 className="font-semibold text-base" style={{ fontFamily: 'var(--font-display)' }}>Scan your ticket</h2>
-              <button onClick={() => setOpen(false)} aria-label="Close" style={{ minHeight: 44, minWidth: 44, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <X size={18} aria-hidden />
+          <div className="w-full max-w-sm rounded-2xl p-5 animate-rise"
+            onClick={e => e.stopPropagation()}
+            style={{ background: 'var(--surface)', border: '1px solid var(--border)', boxShadow: 'var(--e4)' }}>
+            <div className="flex justify-between items-center mb-1">
+              <div className="flex items-center gap-2.5">
+                <span className="w-9 h-9 rounded-xl flex items-center justify-center"
+                  style={{ background: 'var(--brand-soft)', color: 'var(--brand-strong)' }}>
+                  <Camera size={18} aria-hidden />
+                </span>
+                <h2 className="font-bold text-base" style={{ fontFamily: 'var(--font-display)' }}>Scan your ticket</h2>
+              </div>
+              <button onClick={() => setOpen(false)} aria-label="Close"
+                className="rounded-lg flex items-center justify-center pressable"
+                style={{ height: 36, width: 36, color: 'var(--muted)', background: 'var(--surface-2)' }}>
+                <X size={17} aria-hidden />
               </button>
             </div>
 
-            <p className="text-sm mb-3" style={{ color: 'var(--muted)' }}>Use a bundled sample or upload your own:</p>
+            <p className="text-sm mb-4 mt-2" style={{ color: 'var(--muted)' }}>
+              We'll read your section instantly with vision AI. Try a bundled sample:
+            </p>
 
             <div className="flex flex-col gap-2 mb-4">
               {SAMPLE_TICKETS.map(t => (
                 <button
                   key={t.label}
                   onClick={() => handleSample(t.svg)}
-                  className="text-left px-4 py-3 rounded-xl text-sm font-medium transition-colors"
-                  style={{
-                    background: 'var(--chip)',
-                    border: '1px solid var(--border)',
-                    color: 'var(--ink)',
-                    minHeight: '44px',
-                  }}
+                  className="flex items-center gap-3 text-left px-3.5 py-3 rounded-xl text-sm font-medium pressable"
+                  style={{ background: 'var(--surface-2)', border: '1px solid var(--border)', color: 'var(--ink)', minHeight: 48 }}
                 >
-                  {t.label}
+                  <TicketGlyph />
+                  <span className="flex-1">{t.label}</span>
                 </button>
               ))}
             </div>
 
-            <div className="border-t pt-3" style={{ borderColor: 'var(--border)' }}>
-              <label
-                htmlFor="ticket-upload"
-                className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium cursor-pointer"
-                style={{
-                  background: 'var(--accent)',
-                  color: 'var(--accent-ink)',
-                  minHeight: '44px',
-                  display: 'flex',
-                }}
-              >
-                <Camera size={15} aria-hidden />
-                Upload my ticket image
-              </label>
-              <input
-                id="ticket-upload"
-                ref={fileRef}
-                type="file"
-                accept="image/*"
-                className="sr-only"
-                onChange={handleFile}
-                aria-label="Upload ticket image"
-              />
-            </div>
+            <label
+              htmlFor="ticket-upload"
+              className="pill w-full justify-center px-4 py-3 text-sm font-semibold cursor-pointer pressable"
+              style={{ background: 'var(--brand-grad)', color: 'var(--accent-ink)', boxShadow: 'var(--glow-brand)', minHeight: 48 }}
+            >
+              <Camera size={16} aria-hidden />
+              Upload my ticket image
+            </label>
+            <input
+              id="ticket-upload"
+              ref={fileRef}
+              type="file"
+              accept="image/*"
+              className="sr-only"
+              onChange={handleFile}
+              aria-label="Upload ticket image"
+            />
           </div>
         </div>
       )}
     </>
+  )
+}
+
+function TicketGlyph() {
+  return (
+    <span className="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0"
+      style={{ background: 'var(--brand-soft)', color: 'var(--brand-strong)' }}>
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden>
+        <path d="M3 8a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v1a2 2 0 0 0 0 6v1a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-1a2 2 0 0 0 0-6V8Z" stroke="currentColor" strokeWidth="1.6" />
+        <path d="M15 6v12" stroke="currentColor" strokeWidth="1.6" strokeDasharray="2 2" />
+      </svg>
+    </span>
   )
 }

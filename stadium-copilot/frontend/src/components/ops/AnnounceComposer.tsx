@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { sendAnnouncement } from '../../lib/api'
-import { Radio, Send, CheckCircle } from 'lucide-react'
+import { Megaphone, Send, CheckCircle2, Languages } from 'lucide-react'
 
 interface Props { venueId: string }
 
@@ -25,48 +25,45 @@ export default function AnnounceComposer({ venueId }: Props) {
   }
 
   return (
-    <div className="rounded-xl p-4" style={{ background: 'var(--surface)', border: '1px solid var(--border)' }}>
-      <div className="flex items-center gap-2 mb-3">
-        <Radio size={13} style={{ color: 'var(--accent)' }} aria-hidden />
-        <span className="text-xs font-semibold uppercase tracking-wider" style={{ color: 'var(--muted)' }}>
-          Announce to All Fans
+    <div className="flex flex-col">
+      <div className="flex items-center gap-2 mb-2.5">
+        <Megaphone size={13} style={{ color: 'var(--accent)' }} aria-hidden />
+        <span className="eyebrow" style={{ letterSpacing: '0.1em' }}>Announce to All Fans</span>
+        <span className="ml-auto inline-flex items-center gap-1 text-[11px] font-semibold" style={{ color: 'var(--accent)' }}>
+          <Languages size={11} aria-hidden /> Auto-translate ↗
         </span>
       </div>
 
       {sent ? (
-        <div className="flex items-center gap-2 text-sm py-2" style={{ color: 'var(--ok)' }}>
-          <CheckCircle size={14} aria-hidden />
-          Sent to {count} fan session{count !== 1 ? 's' : ''} — translated automatically
+        <div className="flex items-center gap-2 text-sm py-2 mt-auto animate-rise" style={{ color: 'var(--ok)' }} role="status">
+          <CheckCircle2 size={16} aria-hidden />
+          <span>Sent to <strong className="tnum">{count}</strong> fan session{count !== 1 ? 's' : ''} — translated per language</span>
         </div>
       ) : (
-        <div className="flex gap-2">
+        <div className="flex gap-2 mt-auto items-center rounded-xl pl-3 pr-1.5 py-1.5"
+          style={{ background: 'var(--surface-2)', border: '1px solid var(--border)' }}>
           <input
             value={text}
             onChange={e => setText(e.target.value)}
             onKeyDown={e => e.key === 'Enter' && handleSend()}
-            placeholder="Type an announcement..."
-            className="flex-1 px-3 py-2 rounded-lg text-sm outline-none"
-            style={{
-              background: '#1E2533',
-              border: '1px solid var(--border)',
-              color: 'var(--ink)',
-              minHeight: 44,
-            }}
+            placeholder="Type an announcement…"
+            className="flex-1 bg-transparent text-sm outline-none"
+            style={{ color: 'var(--ink)', minHeight: 38 }}
             aria-label="Announcement text"
             disabled={sending}
           />
           <button
             onClick={handleSend}
             disabled={!text.trim() || sending}
-            className="px-3 py-2 rounded-lg"
+            className="rounded-lg flex items-center justify-center pressable"
             style={{
-              background: text.trim() ? 'var(--accent)' : '#1E2533',
-              color: text.trim() ? '#fff' : 'var(--muted)',
-              minHeight: 44, minWidth: 44,
+              background: text.trim() ? 'var(--accent)' : 'var(--surface)',
+              color: text.trim() ? '#08111a' : 'var(--faint)',
+              height: 38, width: 38, flexShrink: 0,
             }}
             aria-label="Send announcement to all fans"
           >
-            <Send size={14} aria-hidden />
+            <Send size={15} aria-hidden />
           </button>
         </div>
       )}

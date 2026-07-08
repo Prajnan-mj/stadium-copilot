@@ -1,5 +1,5 @@
 import { triggerScenario } from '../../lib/api'
-import { Play, RefreshCw, Clock } from 'lucide-react'
+import { RotateCcw, Users, Timer, DoorClosed, LogOut } from 'lucide-react'
 
 interface Props {
   venueId: string
@@ -8,10 +8,10 @@ interface Props {
 }
 
 const SCENARIOS = [
-  { id: 'prematch_rush', label: 'Pre-match Rush' },
-  { id: 'halftime_surge', label: 'Halftime Surge' },
-  { id: 'gate_closure', label: 'Gate Closure' },
-  { id: 'full_egress', label: 'Full Egress' },
+  { id: 'prematch_rush', label: 'Pre-match Rush', Icon: Users },
+  { id: 'halftime_surge', label: 'Halftime Surge', Icon: Timer },
+  { id: 'gate_closure', label: 'Gate Closure', Icon: DoorClosed },
+  { id: 'full_egress', label: 'Full Egress', Icon: LogOut },
 ]
 
 export default function SimControls({ venueId, speed, onSpeedChange }: Props) {
@@ -20,59 +20,43 @@ export default function SimControls({ venueId, speed, onSpeedChange }: Props) {
   }
 
   return (
-    <div className="rounded-xl p-4" style={{ background: 'var(--surface)', border: '1px solid var(--border)' }}>
-      <div className="flex items-center gap-2 mb-3">
-        <Play size={13} style={{ color: 'var(--accent)' }} aria-hidden />
-        <span className="text-xs font-semibold uppercase tracking-wider" style={{ color: 'var(--muted)' }}>
-          Simulation Controls
-        </span>
-      </div>
+    <div className="flex items-center gap-2 flex-shrink-0">
+      <span className="eyebrow hidden lg:inline mr-1" style={{ letterSpacing: '0.1em' }}>Simulation</span>
 
-      <div className="grid grid-cols-2 gap-2 mb-3">
-        {SCENARIOS.map(s => (
-          <button
-            key={s.id}
-            onClick={() => trigger(s.id)}
-            className="py-2 px-3 rounded-lg text-xs font-medium text-left transition-colors"
-            style={{
-              background: '#1E2533',
-              color: 'var(--ink)',
-              border: '1px solid var(--border)',
-              minHeight: 44,
-            }}
-            aria-label={`Trigger scenario: ${s.label}`}
-          >
-            {s.label}
-          </button>
-        ))}
-      </div>
-
-      <div className="flex items-center justify-between">
+      {SCENARIOS.map(({ id, label, Icon }) => (
         <button
-          onClick={() => trigger('reset')}
-          className="flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-medium"
-          style={{ background: '#1E2533', color: 'var(--muted)', border: '1px solid var(--border)', minHeight: 44 }}
-          aria-label="Reset simulation"
+          key={id}
+          onClick={() => trigger(id)}
+          className="flex items-center gap-2 py-2 px-3 text-xs font-semibold whitespace-nowrap pressable"
+          style={{ background: 'var(--surface-2)', color: 'var(--ink)', border: '1px solid var(--border)', borderRadius: 'var(--r-md)' }}
+          aria-label={`Trigger scenario: ${label}`}
         >
-          <RefreshCw size={12} aria-hidden />
-          Reset
+          <Icon size={13} style={{ color: 'var(--accent)', flexShrink: 0 }} aria-hidden />
+          {label}
         </button>
+      ))}
 
-        <div className="flex items-center gap-2">
-          <Clock size={12} style={{ color: 'var(--muted)' }} aria-hidden />
-          <span className="text-xs" style={{ color: 'var(--muted)' }}>Speed</span>
-          <select
-            value={speed}
-            onChange={e => onSpeedChange(Number(e.target.value))}
-            className="text-xs px-2 py-1 rounded"
-            style={{ background: '#1E2533', color: 'var(--ink)', border: '1px solid var(--border)', minHeight: 36 }}
-            aria-label="Simulation speed"
-          >
-            {[0.5, 1, 2, 5, 10].map(v => (
-              <option key={v} value={v}>{v}×</option>
-            ))}
-          </select>
-        </div>
+      <button
+        onClick={() => trigger('reset')}
+        className="flex items-center gap-2 py-2 px-3 text-xs font-semibold whitespace-nowrap pressable"
+        style={{ background: 'transparent', color: 'var(--muted)', border: '1px solid var(--border)', borderRadius: 'var(--r-md)' }}
+        aria-label="Reset simulation"
+      >
+        <RotateCcw size={13} aria-hidden />
+        Reset
+      </button>
+
+      <div className="flex items-center gap-1.5 pl-3 ml-1" style={{ borderLeft: '1px solid var(--border)' }}>
+        <span className="text-xs font-medium" style={{ color: 'var(--muted)' }}>Speed</span>
+        <select
+          value={speed}
+          onChange={e => onSpeedChange(Number(e.target.value))}
+          className="text-xs font-bold px-1.5 py-1 tnum outline-none"
+          style={{ background: 'var(--surface-2)', color: 'var(--ink)', border: '1px solid var(--border)', borderRadius: 'var(--r-sm)' }}
+          aria-label="Simulation speed"
+        >
+          {[0.5, 1, 2, 5, 10].map(v => <option key={v} value={v}>{v}×</option>)}
+        </select>
       </div>
     </div>
   )

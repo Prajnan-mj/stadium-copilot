@@ -13,17 +13,16 @@ export default function MessageBubble({ message, accessible }: Props) {
 
   if (message.isAlert) {
     return (
-      <div className="mx-2 my-2 p-3 rounded-xl flex gap-2"
-        style={{ background: '#FEF2F2', border: '1px solid #FECACA' }}
-        role="alert">
-        <AlertTriangle size={16} style={{ color: '#B4231F', flexShrink: 0, marginTop: 2 }} aria-hidden />
-        <div>
-          <div className="text-xs font-semibold mb-1" style={{ color: '#B4231F' }}>Ops Alert</div>
-          <div style={{ fontSize: '14px', color: '#101418' }}>{message.text}</div>
+      <div className="mx-3 my-2 rounded-2xl overflow-hidden animate-rise" role="alert"
+        style={{ background: 'var(--alert-soft)', border: '1px solid rgba(196,43,35,0.22)', boxShadow: 'var(--e1)' }}>
+        <div className="flex items-center gap-2 px-3.5 py-2" style={{ background: 'rgba(196,43,35,0.08)' }}>
+          <AlertTriangle size={15} style={{ color: 'var(--alert)' }} aria-hidden />
+          <span className="text-xs font-bold uppercase tracking-wide" style={{ color: 'var(--alert)' }}>Ops Alert</span>
+        </div>
+        <div className="px-3.5 py-3">
+          <div style={{ fontSize: 14, lineHeight: 1.5, color: 'var(--ink)' }}>{message.text}</div>
           {message.route && (
-            <div className="mt-2">
-              <VenueMap route={message.route} accessible={accessible} />
-            </div>
+            <div className="mt-2.5"><VenueMap route={message.route} accessible={accessible} /></div>
           )}
         </div>
       </div>
@@ -32,49 +31,54 @@ export default function MessageBubble({ message, accessible }: Props) {
 
   if (message.isAnnouncement) {
     return (
-      <div className="mx-2 my-2 p-3 rounded-xl flex gap-2"
-        style={{ background: '#EFF6FF', border: '1px solid #BFDBFE' }}>
-        <Radio size={16} style={{ color: '#4F8CFF', flexShrink: 0, marginTop: 2 }} aria-hidden />
-        <div>
-          <div className="text-xs font-semibold mb-1" style={{ color: '#4F8CFF' }}>Stadium Announcement</div>
-          <div style={{ fontSize: '14px', color: '#101418' }}>{message.text}</div>
+      <div className="mx-3 my-2 rounded-2xl overflow-hidden animate-rise"
+        style={{ background: 'var(--info-soft)', border: '1px solid rgba(37,99,235,0.2)', boxShadow: 'var(--e1)' }}>
+        <div className="flex items-center gap-2 px-3.5 py-2" style={{ background: 'rgba(37,99,235,0.07)' }}>
+          <Radio size={15} style={{ color: 'var(--info)' }} aria-hidden />
+          <span className="text-xs font-bold uppercase tracking-wide" style={{ color: 'var(--info)' }}>Stadium Announcement</span>
         </div>
+        <div className="px-3.5 py-3" style={{ fontSize: 14, lineHeight: 1.5, color: 'var(--ink)' }}>{message.text}</div>
       </div>
     )
   }
 
   return (
-    <div className={clsx('flex', isUser ? 'justify-end' : 'justify-start', 'mx-2 my-1')}>
+    <div className={clsx('flex flex-col my-2.5 animate-rise', isUser ? 'items-end' : 'items-start')}>
       <div
-        className="max-w-xs rounded-2xl px-4 py-3 text-sm"
+        className="px-4 py-3 text-sm"
         style={{
-          background: isUser ? 'var(--accent)' : 'var(--surface)',
+          background: isUser ? 'var(--brand-grad)' : 'var(--surface)',
           color: isUser ? 'var(--accent-ink)' : 'var(--ink)',
           border: isUser ? 'none' : '1px solid var(--border)',
-          borderRadius: isUser ? '18px 18px 4px 18px' : '18px 18px 18px 4px',
-          maxWidth: '78%',
+          borderRadius: 'var(--r-lg)',
+          boxShadow: isUser ? 'var(--glow-brand)' : 'var(--e1)',
+          maxWidth: '82%',
+          lineHeight: 1.5,
         }}
       >
         <p style={{ whiteSpace: 'pre-wrap', wordBreak: 'break-word' }}>{message.text}</p>
 
-        <div className="flex items-center gap-2 mt-1">
-          {message.source === 'cache' && (
-            <span className="text-xs flex items-center gap-1"
-              style={{ color: isUser ? 'rgba(255,255,255,0.7)' : 'var(--muted)' }}>
-              <Database size={10} aria-hidden /> cached
-            </span>
-          )}
-          {message.lang && message.lang !== 'en' && (
-            <span className="text-xs uppercase"
-              style={{ color: isUser ? 'rgba(255,255,255,0.7)' : 'var(--muted)' }}>
-              {message.lang}
-            </span>
-          )}
-        </div>
+        {(message.source === 'cache' || (message.lang && message.lang !== 'en')) && (
+          <div className="flex items-center gap-2 mt-1.5 pt-1.5"
+            style={{ borderTop: `1px solid ${isUser ? 'rgba(255,255,255,0.22)' : 'var(--border)'}` }}>
+            {message.source === 'cache' && (
+              <span className="text-[11px] flex items-center gap-1 font-medium"
+                style={{ color: isUser ? 'rgba(255,255,255,0.8)' : 'var(--faint)' }}>
+                <Database size={10} aria-hidden /> Cached
+              </span>
+            )}
+            {message.lang && message.lang !== 'en' && (
+              <span className="text-[11px] uppercase font-bold tracking-wide"
+                style={{ color: isUser ? 'rgba(255,255,255,0.8)' : 'var(--faint)' }}>
+                {message.lang}
+              </span>
+            )}
+          </div>
+        )}
       </div>
 
       {!isUser && message.route && (
-        <div className="w-full px-2 mt-1 max-w-xs" style={{ marginLeft: '0.5rem' }}>
+        <div className="mt-1.5" style={{ maxWidth: '90%', width: '100%' }}>
           <VenueMap route={message.route} accessible={accessible} />
         </div>
       )}

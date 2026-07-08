@@ -1,65 +1,236 @@
 @import "tailwindcss";
 
-/* Fan app tokens (light) */
+/* ============================================================
+   Stadium Copilot — Design System
+   Two surfaces: Fan (warm light) · Ops (mission-control dark)
+   ============================================================ */
+
 :root {
-  --bg: #FAFAF8;
+  /* Brand — pitch green */
+  --brand: #00A24A;
+  --brand-strong: #00713A;
+  --brand-soft: #E6F5EC;
+  --brand-ink: #FFFFFF;
+  --brand-grad: linear-gradient(135deg, #00C25A 0%, #00934A 55%, #007A46 100%);
+
+  /* Fan (light) surface tokens */
+  --bg: #F6F8F5;
+  --bg-tint: radial-gradient(120% 80% at 50% -10%, #ECF6EF 0%, #F6F8F5 60%);
   --surface: #FFFFFF;
-  --ink: #101418;
-  --muted: #5B6470;
-  --accent: #0B7A3B;
+  --surface-2: #F1F4EF;
+  --ink: #0E1512;
+  --muted: #55606B;
+  --faint: #8A93A0;
+  --border: #E4E8E2;
+  --border-strong: #D2D8CE;
+  --chip: #EFF3EC;
+  --accent: #00A24A;
   --accent-ink: #FFFFFF;
-  --alert: #B4231F;
-  --chip: #EEF2EC;
-  --border: #E3E6E1;
-  --font-ui: 'Inter', system-ui, sans-serif;
+  --alert: #C42B23;
+  --alert-soft: #FDECEB;
+  --info: #2563EB;
+  --info-soft: #EAF1FE;
+
+  /* Typography */
+  --font-ui: 'Inter', system-ui, -apple-system, sans-serif;
   --font-display: 'Space Grotesk', system-ui, sans-serif;
   --font-mono: 'JetBrains Mono', 'Courier New', monospace;
-  --radius-card: 12px;
-  --radius-control: 8px;
-  --motion: 150ms ease-out;
+
+  /* Radius — soft / rounded */
+  --r-xl: 18px;
+  --r-lg: 14px;
+  --r-md: 10px;
+  --r-sm: 8px;
+  --r-pill: 999px;
+
+  /* Elevation (light) */
+  --e1: 0 1px 2px rgba(16, 24, 20, 0.05), 0 1px 3px rgba(16, 24, 20, 0.04);
+  --e2: 0 2px 6px rgba(16, 24, 20, 0.06), 0 4px 14px rgba(16, 24, 20, 0.06);
+  --e3: 0 8px 24px rgba(16, 24, 20, 0.10), 0 2px 8px rgba(16, 24, 20, 0.06);
+  --e4: 0 20px 48px rgba(16, 24, 20, 0.16);
+  --glow-brand: 0 8px 30px rgba(0, 162, 74, 0.28);
+
+  /* Motion */
+  --motion: 180ms cubic-bezier(0.22, 0.61, 0.36, 1);
+  --motion-slow: 320ms cubic-bezier(0.22, 0.61, 0.36, 1);
 }
 
-/* Ops app tokens (dark) applied via .ops-theme on body/root */
+/* Ops (dark) mission-control theme */
 .ops-theme {
-  --bg: #0B0E14;
-  --surface: #131826;
-  --ink: #E6EAF2;
-  --muted: #8A93A6;
-  --ok: #22C55E;
-  --watch: #F59E0B;
-  --critical: #EF4444;
-  --accent: #4F8CFF;
-  --border: #232B3D;
+  --bg: #070A11;
+  --bg-tint:
+    radial-gradient(90% 60% at 15% -10%, rgba(34, 211, 238, 0.06) 0%, transparent 55%),
+    radial-gradient(90% 60% at 100% 0%, rgba(59, 130, 246, 0.07) 0%, transparent 50%),
+    #070A11;
+  --surface: #0E1420;
+  --surface-2: #151D2C;
+  --surface-3: #1B2436;
+  --ink: #EAEFF8;
+  --muted: #8C97AD;
+  --faint: #5D6784;
+  --border: #202A3D;
+  --border-strong: #2C3852;
+  --chip: #171F2E;
+
+  --brand: #00C25A;
+  --accent: #2DD4A7;
+  --accent-soft: rgba(45, 212, 167, 0.14);
+  --pending: #A78BFA;
+  --pending-glow: rgba(167, 139, 250, 0.18);
+  --ok: #2DD4A7;
+  --ok-glow: rgba(45, 212, 167, 0.35);
+  --watch: #FBBF24;
+  --watch-glow: rgba(251, 191, 36, 0.32);
+  --critical: #FF5A5A;
+  --critical-glow: rgba(255, 90, 90, 0.38);
+
+  /* Elevation (dark) */
+  --e1: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --e2: 0 4px 16px rgba(0, 0, 0, 0.45);
+  --e3: 0 12px 32px rgba(0, 0, 0, 0.55);
+  --e4: 0 24px 60px rgba(0, 0, 0, 0.65);
+  --glow-brand: 0 0 0 1px rgba(56, 189, 248, 0.18), 0 8px 30px rgba(56, 189, 248, 0.12);
 }
 
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
+/* ---------- Reset ----------
+   Only box-sizing here. Tailwind v4 preflight already resets margin and
+   padding in its base layer; adding an unlayered universal reset that zeroes
+   margin and padding would override every layered spacing utility (padding
+   and margin classes) and break all spacing across the app. */
+* { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
 
 body {
   font-family: var(--font-ui);
   font-size: 16px;
-  line-height: 1.5;
+  line-height: 1.55;
   background: var(--bg);
   color: var(--ink);
   -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    animation-duration: 0.01ms !important;
-    transition-duration: 0.01ms !important;
-  }
-}
-
+/* ---------- Focus ---------- */
 :focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 2px;
+  border-radius: 4px;
 }
 
-button, a, [role="button"] {
-  min-height: 44px;
-  min-width: 44px;
+button, a, [role="button"] { -webkit-tap-highlight-color: transparent; }
+
+/* ---------- Reusable component classes ---------- */
+
+/* Panel — the base surface for cards */
+.panel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  box-shadow: var(--e1);
+}
+
+/* Glass panel — for ops overlays / elevated surfaces */
+.glass {
+  background: color-mix(in srgb, var(--surface) 78%, transparent);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  backdrop-filter: blur(14px) saturate(140%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  box-shadow: var(--e2);
+}
+
+/* Section eyebrow label */
+.eyebrow {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--faint);
+}
+
+/* Pill */
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border-radius: var(--r-pill);
+  font-weight: 600;
+  line-height: 1;
+}
+
+/* Tabular numerals for all data readouts */
+.tnum { font-variant-numeric: tabular-nums; font-feature-settings: "tnum" 1; }
+
+/* Interactive lift */
+.lift { transition: transform var(--motion), box-shadow var(--motion); }
+.lift:hover { transform: translateY(-2px); }
+.lift:active { transform: translateY(0); }
+
+/* Press feedback for cards/buttons */
+.pressable { transition: transform var(--motion), box-shadow var(--motion), background var(--motion); }
+.pressable:active { transform: scale(0.98); }
+
+/* Live status dot with pulse ring */
+.livedot {
+  position: relative;
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: currentColor;
+  flex-shrink: 0;
+}
+.livedot::after {
+  content: "";
+  position: absolute; inset: -3px;
+  border-radius: 50%;
+  border: 1.5px solid currentColor;
+  opacity: 0;
+  animation: pingring 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+/* ---------- Keyframes ---------- */
+@keyframes pingring {
+  0% { transform: scale(0.7); opacity: 0.7; }
+  80%, 100% { transform: scale(1.9); opacity: 0; }
+}
+@keyframes typingdot {
+  0%, 80%, 100% { transform: translateY(0); opacity: 0.5; }
+  40% { transform: translateY(-5px); opacity: 1; }
+}
+@keyframes dashmove { to { stroke-dashoffset: -24; } }
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+@keyframes rise {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadein { from { opacity: 0; } to { opacity: 1; } }
+@keyframes softpulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.55; }
+}
+
+.animate-rise { animation: rise var(--motion-slow) both; }
+.animate-fadein { animation: fadein var(--motion-slow) both; }
+
+/* ---------- Scrollbars ---------- */
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: var(--border-strong);
+  border-radius: 999px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+::-webkit-scrollbar-thumb:hover { background: var(--faint); background-clip: padding-box; }
+
+/* ---------- Reduced motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }

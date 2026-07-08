@@ -119,7 +119,7 @@ export const useOpsStore = create<OpsStore>((set) => ({
   clockMin: -120,
   speed: 1,
   simRunning: true,
-  previewOpen: true,
+  previewOpen: false,
   wsConnected: false,
   setZones: (z) => set({ zones: z }),
   setRecs: (r) => set({ recs: r }),

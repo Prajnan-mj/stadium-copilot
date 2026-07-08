@@ -1,12 +1,21 @@
 {
   "nyj|how do i get from gate c to section 232?|en|False": {
-    "reply_text": "To get to Section 232 from Gate C, I'll need to look that up.",
+    "reply_text": "From Gate C, enter and take the escalator up to the upper concourse (Level 2). Turn right and follow the North Concourse eastward — Section 232 is on the field side, just past the 230 vomitory. It's about a 4-minute walk (180 m). Look for the overhead 230s signage above the entry tunnels.",
     "detected_lang": "en",
-    "route": null,
+    "route": {
+      "steps": [
+        { "node_id": "n_gate_c", "label": "Gate C", "x": 390.0, "y": 50.0 },
+        { "node_id": "n_conc_n", "label": "North Concourse", "x": 390.0, "y": 120.0 },
+        { "node_id": "n_sec_232", "label": "Section 232", "x": 500.0, "y": 150.0 }
+      ],
+      "distance_m": 180.0,
+      "eta_min": 4.0,
+      "accessible": false
+    },
     "source": "gemini"
   },
   "nyj|where is the accessible restroom near section 134?|en|False": {
-    "reply_text": "I'll look up the nearest accessible restroom to section 134.",
+    "reply_text": "The nearest accessible restroom to Section 134 is on the North Concourse, near elevator NE. Exit your section toward the North Concourse and it's just past Gate B — about a 3-minute step-free walk. The route below avoids stairs.",
     "detected_lang": "en",
     "route": {
       "steps": [
@@ -145,6 +154,18 @@
   },
   "mia|where is first aid?|en|False": {
     "reply_text": "First Aid stations are on the North and South concourses. If you're experiencing heat illness symptoms — dizziness, heavy sweating, confusion — move to a shaded area immediately and alert the nearest yellow-vest steward.",
+    "detected_lang": "en",
+    "route": null,
+    "source": "gemini"
+  },
+  "nyj|donde esta el bano accesible cerca de la seccion 134?|en|False": {
+    "reply_text": "El baño accesible más cercano a la sección 134 está ubicado en el concierto noreste (NE concourse). Para llegar allí desde la sección 134, dirígete hacia el norte y sigue las señales hacia el concierto noreste. El baño accesible está a unos 4 minutos a pie.",
+    "detected_lang": "pt",
+    "route": null,
+    "source": "gemini"
+  },
+  "nyj|hi|en|False": {
+    "reply_text": "Hello. Welcome to MetLife Stadium. How can I help you today?",
     "detected_lang": "en",
     "route": null,
     "source": "gemini"

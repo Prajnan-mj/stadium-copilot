@@ -132,28 +132,37 @@ export default function FanApp() {
   }
 
   const lang = lastAssistantLang
+  const venueName = venueParam === 'nyj' ? 'MetLife Stadium' : 'Hard Rock Stadium'
 
   return (
     <div
-      className="flex flex-col h-screen"
-      style={{ background: 'var(--bg)', maxWidth: embed ? '100%' : '430px', margin: '0 auto' }}
+      className="flex flex-col h-dvh w-full relative"
+      style={{ background: 'var(--bg-tint)' }}
     >
       {/* Header */}
       {!embed && (
-        <header className="flex items-center justify-between px-4 py-3"
-          style={{ background: 'var(--surface)', borderBottom: '1px solid var(--border)' }}>
-          <div>
-            <h1 className="font-semibold text-base" style={{ fontFamily: 'var(--font-display)' }}>
-              Stadium Copilot
-            </h1>
-            <p className="text-xs" style={{ color: 'var(--muted)' }}>
-              {venueParam === 'nyj' ? 'MetLife Stadium' : 'Hard Rock Stadium'}
-            </p>
+        <header className="flex items-center justify-between gap-3 px-5 sm:px-8 py-3.5 z-20 w-full"
+          style={{ background: 'color-mix(in srgb, var(--surface) 85%, transparent)', backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)', borderBottom: '1px solid var(--border)' }}>
+          <div className="flex items-center gap-2.5">
+            <span className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0"
+              style={{ background: 'var(--brand-grad)', boxShadow: 'var(--glow-brand)' }}>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden>
+                <ellipse cx="12" cy="12" rx="10" ry="7" stroke="white" strokeWidth="1.8" />
+                <ellipse cx="12" cy="12" rx="4" ry="7" stroke="white" strokeWidth="1.4" opacity="0.75" />
+                <line x1="2" y1="12" x2="22" y2="12" stroke="white" strokeWidth="1.4" opacity="0.75" />
+              </svg>
+            </span>
+            <div>
+              <h1 className="font-bold text-[15px] leading-tight tracking-tight" style={{ fontFamily: 'var(--font-display)' }}>
+                Stadium Copilot
+              </h1>
+              <p className="text-xs leading-tight" style={{ color: 'var(--muted)' }}>{venueName}</p>
+            </div>
           </div>
           <div className="flex items-center gap-2">
             {store.section && (
-              <span className="text-xs px-2 py-1 rounded-full"
-                style={{ background: 'var(--chip)', color: 'var(--muted)' }}>
+              <span className="pill text-xs px-2.5 py-1 tnum"
+                style={{ background: 'var(--brand-soft)', color: 'var(--brand-strong)' }}>
                 §{store.section}
               </span>
             )}
@@ -161,21 +170,24 @@ export default function FanApp() {
               onClick={() => store.setAccessibility(!store.accessibilityMode)}
               aria-pressed={store.accessibilityMode}
               aria-label="Toggle step-free routing"
-              className="p-2 rounded-lg transition-colors"
+              className="rounded-xl flex items-center justify-center pressable"
               style={{
-                background: store.accessibilityMode ? 'var(--accent)' : 'var(--chip)',
+                background: store.accessibilityMode ? 'var(--brand-grad)' : 'var(--chip)',
                 color: store.accessibilityMode ? 'var(--accent-ink)' : 'var(--muted)',
-                minHeight: 44, minWidth: 44,
+                boxShadow: store.accessibilityMode ? 'var(--glow-brand)' : 'none',
+                height: 40, width: 40,
               }}
             >
-              <Accessibility size={16} aria-hidden />
+              <Accessibility size={17} aria-hidden />
             </button>
-            <div className="flex items-center gap-1 text-xs px-2 py-1 rounded-full"
+            <div className="pill text-xs px-2.5 py-1"
               style={{
-                background: store.wsConnected ? '#DCFCE7' : '#FEE2E2',
-                color: store.wsConnected ? '#15803D' : '#B91C1C',
+                background: store.wsConnected ? 'var(--brand-soft)' : 'var(--alert-soft)',
+                color: store.wsConnected ? 'var(--brand-strong)' : 'var(--alert)',
               }}>
-              {store.wsConnected ? <Wifi size={11} aria-hidden /> : <WifiOff size={11} aria-hidden />}
+              {store.wsConnected
+                ? <span className="livedot" style={{ color: 'var(--brand)', width: 6, height: 6 }} />
+                : <WifiOff size={11} aria-hidden />}
               {store.wsConnected ? 'Live' : 'Offline'}
             </div>
           </div>
@@ -184,8 +196,8 @@ export default function FanApp() {
 
       {/* Offline banner */}
       {store.offline && (
-        <div className="flex items-center gap-2 px-4 py-2 text-sm"
-          style={{ background: '#FEF3C7', color: '#92400E', borderBottom: '1px solid #FDE68A' }}
+        <div className="flex items-center gap-2 px-4 py-2 text-sm animate-fadein"
+          style={{ background: '#FEF6E4', color: '#8A5A00', borderBottom: '1px solid #F5E3BC' }}
           role="status">
           <ZoneOff size={14} aria-hidden />
           {getUIString(lang, 'offlineBanner')}
@@ -197,31 +209,36 @@ export default function FanApp() {
 
       {/* Chips (shown when no messages yet) */}
       {store.messages.length === 0 && (
-        <SampleChips onSelect={sendMessage} disabled={loading} />
+        <div className="w-full max-w-3xl mx-auto">
+          <SampleChips onSelect={sendMessage} disabled={loading} />
+        </div>
       )}
 
       {/* Input bar */}
-      <div className="px-3 py-3" style={{ background: 'var(--surface)', borderTop: '1px solid var(--border)' }}>
-        <div className="flex items-center gap-2">
+      <div className="px-4 sm:px-6 pt-2.5 pb-4 w-full"
+        style={{ background: 'color-mix(in srgb, var(--surface) 92%, transparent)', backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)', borderTop: '1px solid var(--border)' }}>
+        <div className="w-full max-w-3xl mx-auto">
+        <div className="flex items-center gap-2 mb-2">
           <TicketSnap onTicket={handleTicket} />
-
           <button
             onClick={() => store.setOffline(!store.offline)}
             aria-pressed={store.offline}
             aria-label="Simulate stadium dead zone"
-            className="px-2 py-2 rounded-lg text-xs font-medium"
+            className="pill px-3 py-2 text-xs font-semibold pressable"
             style={{
-              background: store.offline ? '#FEF3C7' : 'var(--chip)',
-              color: store.offline ? '#92400E' : 'var(--muted)',
+              background: store.offline ? '#FEF6E4' : 'var(--chip)',
+              color: store.offline ? '#8A5A00' : 'var(--muted)',
               border: '1px solid var(--border)',
-              minHeight: 44,
-              whiteSpace: 'nowrap',
+              minHeight: 40, whiteSpace: 'nowrap',
             }}
             title="Simulate dead zone"
           >
-            {store.offline ? 'Online' : 'Dead zone'}
+            {store.offline ? <Wifi size={13} aria-hidden /> : <ZoneOff size={13} aria-hidden />}
+            {store.offline ? 'Back online' : 'Dead zone'}
           </button>
-
+        </div>
+        <div className="flex items-center gap-2 pl-4 pr-1.5 py-1.5"
+          style={{ background: 'var(--surface)', border: '1px solid var(--border)', boxShadow: 'var(--e1)', borderRadius: 'var(--r-lg)' }}>
           <input
             ref={inputRef}
             type="text"
@@ -231,27 +248,24 @@ export default function FanApp() {
             placeholder={getUIString(lang, 'placeholder')}
             disabled={loading}
             aria-label="Message input"
-            className="flex-1 px-4 py-2 rounded-xl text-sm outline-none"
-            style={{
-              background: 'var(--bg)',
-              border: '1px solid var(--border)',
-              color: 'var(--ink)',
-              minHeight: 44,
-            }}
+            className="flex-1 bg-transparent text-sm outline-none"
+            style={{ color: 'var(--ink)', minHeight: 40 }}
           />
           <button
             onClick={() => sendMessage()}
             disabled={loading || !input.trim()}
             aria-label="Send message"
-            className="p-3 rounded-xl transition-colors"
+            className="rounded-xl flex items-center justify-center transition-all pressable"
             style={{
-              background: input.trim() ? 'var(--accent)' : 'var(--chip)',
-              color: input.trim() ? 'var(--accent-ink)' : 'var(--muted)',
-              minHeight: 44, minWidth: 44,
+              background: input.trim() ? 'var(--brand-grad)' : 'var(--chip)',
+              color: input.trim() ? 'var(--accent-ink)' : 'var(--faint)',
+              boxShadow: input.trim() ? 'var(--glow-brand)' : 'none',
+              height: 40, width: 40, flexShrink: 0,
             }}
           >
             <Send size={16} aria-hidden />
           </button>
+        </div>
         </div>
       </div>
     </div>
