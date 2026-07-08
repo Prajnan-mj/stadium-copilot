@@ -1,0 +1,10 @@
+{
+  "id": "full_egress",
+  "label": "Full Egress",
+  "description": "T+93: Final whistle — all zones spike as 82,500 fans exit simultaneously.",
+  "jump_clock_to": 92,
+  "timeline": [
+    {"t_offset_min": 0, "zone_type": "gate", "inflow_mult": 0.1, "capacity_mult": 1.2, "duration_min": 40},
+    {"t_offset_min": 0, "zone_type": "concourse", "inflow_mult": 3.0, "duration_min": 40}
+  ]
+}

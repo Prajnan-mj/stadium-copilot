@@ -1,0 +1,152 @@
+{
+  "nyj|how do i get from gate c to section 232?|en|False": {
+    "reply_text": "To get to Section 232 from Gate C, I'll need to look that up.",
+    "detected_lang": "en",
+    "route": null,
+    "source": "gemini"
+  },
+  "nyj|where is the accessible restroom near section 134?|en|False": {
+    "reply_text": "I'll look up the nearest accessible restroom to section 134.",
+    "detected_lang": "en",
+    "route": {
+      "steps": [
+        {
+          "node_id": "n_gate_a",
+          "label": "Gate A",
+          "x": 130.0,
+          "y": 90.0
+        },
+        {
+          "node_id": "n_conc_n",
+          "label": "North Concourse",
+          "x": 390.0,
+          "y": 120.0
+        },
+        {
+          "node_id": "n_restroom_n1",
+          "label": "Restroom North (101)",
+          "x": 300.0,
+          "y": 125.0
+        }
+      ],
+      "distance_m": 100.0,
+      "eta_min": 1.3,
+      "accessible": false
+    },
+    "source": "gemini"
+  },
+  "nyj|where is the accessible restroom near my section 134?|en|False": {
+    "reply_text": "The accessible restroom near section 134 is located on the NE concourse, near elevator NE. To get there, exit your section and head towards Gate B, then continue to the NE concourse. The walk should take about 7 minutes.",
+    "detected_lang": "en",
+    "route": {
+      "steps": [
+        {
+          "node_id": "n_gate_a",
+          "label": "Gate A",
+          "x": 130.0,
+          "y": 90.0
+        },
+        {
+          "node_id": "n_conc_n",
+          "label": "North Concourse",
+          "x": 390.0,
+          "y": 120.0
+        },
+        {
+          "node_id": "n_restroom_n1",
+          "label": "Restroom North (101)",
+          "x": 300.0,
+          "y": 125.0
+        }
+      ],
+      "distance_m": 100.0,
+      "eta_min": 1.3,
+      "accessible": false
+    },
+    "source": "gemini"
+  },
+  "nyj|¿qué bolsos están permitidos en el estadio?|es|False": {
+    "reply_text": "Solo se permiten bolsos transparentes de hasta 12\"×6\"×12\" o un pequeño bolso de mano que no supere las dimensiones de 4.5\"×6.5\". Cada persona solo puede llevar un bolso transparente.",
+    "detected_lang": "en",
+    "route": null,
+    "source": "gemini"
+  },
+  "nyj|onde fica o banheiro acessível mais próximo da seção 134?|pt|False": {
+    "reply_text": "O banheiro acessível mais próximo da seção 134 é o banheiro acessível localizado no concorrido NE. Você pode chegar lá saindo da seção 134 e seguindo em direção ao concorrido NE. A distância é de aproximadamente 550 metros e o tempo de caminhada é de cerca de 7 minutos. Você pode encontrar o banheiro acessível próximo ao elevador no concorrido NE.",
+    "detected_lang": "pt",
+    "route": null,
+    "source": "gemini"
+  },
+  "nyj|मैनहट्टन वापस जाने का सबसे अच्छा तरीका क्या है?|hi|False": {
+    "reply_text": "मैनहट्टन वापस जाने का सबसे अच्छा तरीका मेट्रोलाइफ स्टेडियम से न्यू जर्सी ट्रांजिट की बसें लेना है, जो आपको पोर्ट अथॉरिटी बस टर्मिनल तक ले जाती हैं, जहाँ से आप मैनहट्टन के विभिन्न हिस्सों में जा सकते हैं। यह तरीका पार्किंग की भीड़ से बचने और कम उत्सर्जन में मदद करता है।\n\nवैकल्पिक रूप से, आप टैक्सी या राइड-शेयर सेवाओं का उपयोग कर सकते हैं, लेकिन ध्यान रखें कि यातायात भारी हो सकता है और यह अधिक महंगा हो सकता है।\n\nयदि आप ड्राइव कर रहे हैं, तो ध्यान रखें कि पार्किंग की भीड़ और यातायात की समस्या हो सकती है।",
+    "detected_lang": "hi",
+    "route": null,
+    "source": "gemini"
+  },
+  "mia|hvor er nærmeste hydreringsstasjon?|no|False": {
+    "reply_text": "Hydreringsstasjonen er plassert nær hvert av toasområdene på stadionet. Den nærmeste hydreringsstasjonen fra din nåværende beliggenhet er ved North concourse, som er ca. 5 minutters gange fra Gate G.",
+    "detected_lang": "no",
+    "route": null,
+    "source": "gemini"
+  },
+  "mia|how do i get from gate c to section 232?|en|False": {
+    "reply_text": "From Gate C, head east on the concourse to the escalators or elevators, then go up to the upper level. Walk west on the upper concourse for about 3 minutes, then turn left to find Section 232. Estimated walk time is about 5 minutes.",
+    "detected_lang": "no",
+    "route": null,
+    "source": "gemini"
+  },
+  "mia|¿qué bolsos están permitidos en el estadio?|es|False": {
+    "reply_text": "En el estadio, están permitidos bolsos transparentes de hasta 12\"×6\"×12\" o un pequeño bolso de mano que no supere las dimensiones de 4.5\"×6.5\". Solo se permite un bolso transparente por persona.",
+    "detected_lang": "en",
+    "route": null,
+    "source": "gemini"
+  },
+  "mia|onde fica o banheiro acessível mais próximo da seção 134?|pt|False": {
+    "reply_text": "O banheiro acessível mais próximo da seção 134 é o banheiro acessível da concorrência NE (node: n_restroom_acc_ne). Você pode chegar lá saindo da seção 134 e seguindo em direção ao norte até chegar ao banheiro. A distância é de aproximadamente 230 metros e o tempo de caminhada é de cerca de 4 minutos.",
+    "detected_lang": "pt",
+    "route": null,
+    "source": "gemini"
+  },
+  "nyj|what can't i bring into the stadium?|en|False": {
+    "reply_text": "You can't bring large golf-style umbrellas, telescoping umbrellas, or bags that don't meet the size requirements (clear bags up to 12\"×6\"×12\" or a small clutch purse no larger than 4.5\"×6.5\", one clear bag per person).",
+    "detected_lang": "en",
+    "route": null,
+    "source": "gemini"
+  },
+  "nyj|where is first aid?|en|False": {
+    "reply_text": "First Aid stations are on the North concourse near Gate C, and on the South concourse. For emergencies, flag the nearest yellow-vest steward immediately.",
+    "detected_lang": "no",
+    "route": null,
+    "source": "gemini"
+  },
+  "nyj|what is the best way back to manhattan after the final?|en|False": {
+    "reply_text": "Take NJ Transit Meadowlands Rail to Secaucus Junction, then connect to Penn Station. Takes about 20 minutes total. This option is far faster than driving out of the lots post-match, which can be very congested.",
+    "detected_lang": "en",
+    "route": null,
+    "source": "gemini"
+  },
+  "nyj|is there a water refill point?|en|False": {
+    "reply_text": "Yes, there are hydration stations where you can refill your water bottle. The nearest one to you will depend on your location in the stadium. If you're in the upper levels, you can try the concourses. There are hydration stations at the NE, NW, SE, and SW concourses.",
+    "detected_lang": "en",
+    "route": null,
+    "source": "gemini"
+  },
+  "nyj|where do i ask for help?|en|False": {
+    "reply_text": "You can ask for help at the Fan Help Desks located on the NE and SW concourses. Staff in yellow vests can also assist anywhere on the concourse.",
+    "detected_lang": "no",
+    "route": null,
+    "source": "gemini"
+  },
+  "mia|what can't i bring into the stadium?|en|False": {
+    "reply_text": "Certain items are not allowed inside the stadium. Non-clear bags larger than 12\"×6\"×12\" or clutch purses larger than 4.5\"×6.5\" are prohibited, as well as any other non-approved items. If you have specific questions about what you can bring, I recommend checking with a Fan Help Desk on the NE or SW concourse for more information.",
+    "detected_lang": "no",
+    "route": null,
+    "source": "gemini"
+  },
+  "mia|where is first aid?|en|False": {
+    "reply_text": "First Aid stations are on the North and South concourses. If you're experiencing heat illness symptoms — dizziness, heavy sweating, confusion — move to a shaded area immediately and alert the nearest yellow-vest steward.",
+    "detected_lang": "en",
+    "route": null,
+    "source": "gemini"
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "id": "halftime_surge",
+  "label": "Halftime Surge",
+  "description": "T+45: Gate C and North concourse surge as fans pour out at halftime.",
+  "jump_clock_to": 44,
+  "timeline": [
+    {"t_offset_min": 0, "zone_id": "gate_c", "inflow_mult": 2.5, "duration_min": 25},
+    {"t_offset_min": 0, "zone_id": "concourse_n", "inflow_mult": 2.5, "duration_min": 25},
+    {"t_offset_min": 0, "zone_type": "concourse", "inflow_mult": 1.6, "duration_min": 20}
+  ]
+}

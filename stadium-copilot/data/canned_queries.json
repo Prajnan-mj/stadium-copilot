@@ -1,0 +1,17 @@
+[
+  {"venue_id": "nyj", "query": "How do I get from Gate C to Section 232?", "lang": "en", "tags": ["route","navigation"]},
+  {"venue_id": "nyj", "query": "¿Qué bolsos están permitidos en el estadio?", "lang": "es", "tags": ["bags","policy"]},
+  {"venue_id": "nyj", "query": "Onde fica o banheiro acessível mais próximo da seção 134?", "lang": "pt", "tags": ["accessible","restroom","route"]},
+  {"venue_id": "nyj", "query": "मैनहट्टन वापस जाने का सबसे अच्छा तरीका क्या है?", "lang": "hi", "tags": ["transit","departure"]},
+  {"venue_id": "mia", "query": "Hvor er nærmeste hydreringsstasjon?", "lang": "no", "tags": ["hydration","miami"]},
+  {"venue_id": "mia", "query": "How do I get from Gate C to Section 232?", "lang": "en", "tags": ["route","navigation"]},
+  {"venue_id": "mia", "query": "¿Qué bolsos están permitidos en el estadio?", "lang": "es", "tags": ["bags","policy"]},
+  {"venue_id": "mia", "query": "Onde fica o banheiro acessível mais próximo da seção 134?", "lang": "pt", "tags": ["accessible","restroom","route"]},
+  {"venue_id": "nyj", "query": "What can't I bring into the stadium?", "lang": "en", "tags": ["prohibited","policy"]},
+  {"venue_id": "nyj", "query": "Where is first aid?", "lang": "en", "tags": ["first aid","medical"]},
+  {"venue_id": "nyj", "query": "What is the best way back to Manhattan after the final?", "lang": "en", "tags": ["transit","departure","manhattan"]},
+  {"venue_id": "nyj", "query": "Is there a water refill point?", "lang": "en", "tags": ["water","hydration"]},
+  {"venue_id": "nyj", "query": "Where do I ask for help?", "lang": "en", "tags": ["help","assistance"]},
+  {"venue_id": "mia", "query": "What can't I bring into the stadium?", "lang": "en", "tags": ["prohibited","policy"]},
+  {"venue_id": "mia", "query": "Where is first aid?", "lang": "en", "tags": ["first aid","medical"]}
+]

@@ -1,0 +1,10 @@
+{
+  "id": "gate_closure",
+  "label": "Gate Closure",
+  "description": "Gate C closed; 60% of inflow redistributed to Gates B and D.",
+  "timeline": [
+    {"t_offset_min": 0, "zone_id": "gate_c", "capacity_mult": 0, "inflow_mult": 0.4, "duration_min": 40},
+    {"t_offset_min": 0, "zone_id": "gate_b", "inflow_mult": 1.6, "duration_min": 40},
+    {"t_offset_min": 0, "zone_id": "gate_d", "inflow_mult": 1.6, "duration_min": 40}
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "id": "prematch_rush",
+  "label": "Pre-match Rush",
+  "description": "T-45: All gates ramp up sharply as fans arrive for kickoff.",
+  "jump_clock_to": -45,
+  "timeline": [
+    {"t_offset_min": 0, "zone_type": "gate", "inflow_mult": 1.8, "duration_min": 30},
+    {"t_offset_min": 0, "zone_type": "concourse", "inflow_mult": 1.5, "duration_min": 30}
+  ]
+}
