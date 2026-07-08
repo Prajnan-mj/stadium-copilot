@@ -23,7 +23,7 @@ deploy:
 	gcloud run deploy stadium-copilot --source . --region asia-south1 \
 		--allow-unauthenticated --min-instances 1 \
 		--set-env-vars DEMO_MODE=1,SIM_SEED=26 \
-		--set-secrets GEMINI_API_KEY=GEMINI_API_KEY:latest
+		--set-secrets NVIDIA_API_KEY=NVIDIA_API_KEY:latest
 
 warm:
 	python backend/warm_cache.py
