@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: stadium-copilot
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    region: singapore
+    plan: free
+    envVars:
+      - key: DEMO_MODE
+        value: "1"
+      - key: SIM_SEED
+        value: "26"
+      - key: PORT
+        value: "8080"
+      - key: NVIDIA_API_KEY
+        sync: false
