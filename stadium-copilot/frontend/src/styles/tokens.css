@@ -20,7 +20,7 @@
   --surface-2: #F1F4EF;
   --ink: #0E1512;
   --muted: #55606B;
-  --faint: #8A93A0;
+  --faint: #68707D; /* WCAG AA 5.0:1 on --surface (was #8A93A0 at 3.1:1, failed AA) */
   --border: #E4E8E2;
   --border-strong: #D2D8CE;
   --chip: #EFF3EC;
@@ -67,7 +67,7 @@
   --surface-3: #1B2436;
   --ink: #EAEFF8;
   --muted: #8C97AD;
-  --faint: #5D6784;
+  --faint: #78829C; /* WCAG AA 4.8:1 on --surface (was #5D6784 at 3.3:1, failed AA) */
   --border: #202A3D;
   --border-strong: #2C3852;
   --chip: #171F2E;

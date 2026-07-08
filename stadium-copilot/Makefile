@@ -8,7 +8,8 @@ dev:
 	npx concurrently "cd frontend && npm run dev" "cd backend && uvicorn main:app --reload --port 8080"
 
 check:
-	cd backend && python -m ruff check . && python -m pytest smoke_test.py -q 2>/dev/null || true
+	cd backend && python -m ruff check .
+	cd backend && python -m pytest tests/ -q
 	cd frontend && npm run typecheck
 
 build:

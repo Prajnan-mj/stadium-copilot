@@ -4,9 +4,24 @@
     "detected_lang": "en",
     "route": {
       "steps": [
-        { "node_id": "n_gate_c", "label": "Gate C", "x": 390.0, "y": 50.0 },
-        { "node_id": "n_conc_n", "label": "North Concourse", "x": 390.0, "y": 120.0 },
-        { "node_id": "n_sec_232", "label": "Section 232", "x": 500.0, "y": 150.0 }
+        {
+          "node_id": "n_gate_c",
+          "label": "Gate C",
+          "x": 390.0,
+          "y": 50.0
+        },
+        {
+          "node_id": "n_conc_n",
+          "label": "North Concourse",
+          "x": 390.0,
+          "y": 120.0
+        },
+        {
+          "node_id": "n_sec_232",
+          "label": "Section 232",
+          "x": 500.0,
+          "y": 150.0
+        }
       ],
       "distance_m": 180.0,
       "eta_min": 4.0,
@@ -166,6 +181,18 @@
   },
   "nyj|hi|en|False": {
     "reply_text": "Hello. Welcome to MetLife Stadium. How can I help you today?",
+    "detected_lang": "en",
+    "route": null,
+    "source": "gemini"
+  },
+  "nyj|neevu hege iddira?|en|False": {
+    "reply_text": "I don't have that information. Please visit the nearest Fan Help Desk for assistance.",
+    "detected_lang": "en",
+    "route": null,
+    "source": "gemini"
+  },
+  "nyj|how to exit, i have accidentally jumped on the field|en|False": {
+    "reply_text": "Alert the nearest steward wearing a yellow vest immediately. They will escort you off the field and provide further assistance. Please follow their instructions to ensure a safe exit.",
     "detected_lang": "en",
     "route": null,
     "source": "gemini"

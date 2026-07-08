@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Camera, X } from 'lucide-react'
 
 // Bundled sample ticket SVGs as base64
@@ -55,11 +55,30 @@ interface Props {
 export default function TicketSnap({ onTicket }: Props) {
   const [open, setOpen] = useState(false)
   const fileRef = useRef<HTMLInputElement>(null)
+  const triggerRef = useRef<HTMLButtonElement>(null)
+  const dialogRef = useRef<HTMLDivElement>(null)
+
+  function close() {
+    setOpen(false)
+    triggerRef.current?.focus()
+  }
+
+  useEffect(() => {
+    if (!open) return
+    dialogRef.current?.focus()
+
+    function onKeyDown(e: KeyboardEvent) {
+      if (e.key === 'Escape') close()
+    }
+    document.addEventListener('keydown', onKeyDown)
+    return () => document.removeEventListener('keydown', onKeyDown)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [open])
 
   function handleSample(svg: string) {
     const b64 = svgToBase64(svg)
     onTicket(b64)
-    setOpen(false)
+    close()
   }
 
   function handleFile(e: React.ChangeEvent<HTMLInputElement>) {
@@ -70,7 +89,7 @@ export default function TicketSnap({ onTicket }: Props) {
       const result = reader.result as string
       const b64 = result.split(',')[1]
       onTicket(b64)
-      setOpen(false)
+      close()
     }
     reader.readAsDataURL(file)
   }
@@ -78,6 +97,7 @@ export default function TicketSnap({ onTicket }: Props) {
   return (
     <>
       <button
+        ref={triggerRef}
         onClick={() => setOpen(true)}
         className="pill px-3 py-2 text-xs font-semibold pressable"
         style={{
@@ -96,14 +116,15 @@ export default function TicketSnap({ onTicket }: Props) {
         <div
           className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-3 animate-fadein"
           style={{ background: 'rgba(8,12,10,0.55)', backdropFilter: 'blur(4px)', WebkitBackdropFilter: 'blur(4px)' }}
-          role="dialog"
-          aria-modal="true"
-          aria-label="Ticket scanner"
-          onClick={() => setOpen(false)}
+          onClick={close}
         >
-          <div className="w-full max-w-sm rounded-2xl p-5 animate-rise"
+          <div ref={dialogRef} className="w-full max-w-sm rounded-2xl p-5 animate-rise"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Ticket scanner"
+            tabIndex={-1}
             onClick={e => e.stopPropagation()}
-            style={{ background: 'var(--surface)', border: '1px solid var(--border)', boxShadow: 'var(--e4)' }}>
+            style={{ background: 'var(--surface)', border: '1px solid var(--border)', boxShadow: 'var(--e4)', outline: 'none' }}>
             <div className="flex justify-between items-center mb-1">
               <div className="flex items-center gap-2.5">
                 <span className="w-9 h-9 rounded-xl flex items-center justify-center"
@@ -112,7 +133,7 @@ export default function TicketSnap({ onTicket }: Props) {
                 </span>
                 <h2 className="font-bold text-base" style={{ fontFamily: 'var(--font-display)' }}>Scan your ticket</h2>
               </div>
-              <button onClick={() => setOpen(false)} aria-label="Close"
+              <button onClick={close} aria-label="Close"
                 className="rounded-lg flex items-center justify-center pressable"
                 style={{ height: 36, width: 36, color: 'var(--muted)', background: 'var(--surface-2)' }}>
                 <X size={17} aria-hidden />

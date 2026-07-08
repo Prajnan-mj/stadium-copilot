@@ -57,7 +57,7 @@ export default function Landing() {
           style={{ background: 'var(--surface-2)' }}>
           <div className="max-w-xl">
             <span className="inline-flex items-center gap-2 text-xs font-bold tracking-wide uppercase mb-7 animate-rise"
-              style={{ color: 'var(--brand)' }}>
+              style={{ color: 'var(--brand-strong)' }}>
               <span className="livedot" style={{ color: 'var(--brand)', width: 7, height: 7 }} />
               FIFA World Cup 2026 · Live Demo
             </span>
