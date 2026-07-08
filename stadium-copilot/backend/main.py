@@ -3,35 +3,35 @@ import asyncio
 import json
 import os
 import time
-import uuid
+from contextlib import asynccontextmanager
 from pathlib import Path
 
 from dotenv import load_dotenv
 load_dotenv(Path(__file__).parent.parent / ".env")
 
-from fastapi import FastAPI, WebSocket, WebSocketDisconnect, HTTPException
-from fastapi.middleware.cors import CORSMiddleware
-from fastapi.staticfiles import StaticFiles
-from fastapi.responses import FileResponse
+# NVIDIA_API_KEY and friends must be in the environment before `gemini` (and
+# anything importing it) loads, since gemini.py reads them at module level —
+# hence load_dotenv() runs ahead of these imports rather than at the top.
+from fastapi import FastAPI, WebSocket, WebSocketDisconnect, HTTPException  # noqa: E402
+from fastapi.middleware.cors import CORSMiddleware  # noqa: E402
+from fastapi.staticfiles import StaticFiles  # noqa: E402
+from fastapi.responses import FileResponse  # noqa: E402
 
-import gemini as g
-from models import (
+import gemini as g  # noqa: E402
+from models import (  # noqa: E402
     ChatRequest, ChatResponse, AnnounceRequest, AnnounceResponse,
     IncidentRequest, ApproveRequest, ScenarioRequest, HealthResponse,
     CVCountRequest, UserContext,
 )
-from sessions import session_manager
-from sim import SimEngine
-from ops import OpsManager
-from retrieval import build_chunks, retrieve, format_context
-from routing import find_route, section_to_node, node_for_label
+from sessions import session_manager  # noqa: E402
+from sim import SimEngine  # noqa: E402
+from ops import OpsManager  # noqa: E402
+from retrieval import build_chunks, retrieve, format_context  # noqa: E402
+from routing import find_route, section_to_node, node_for_label  # noqa: E402
 
 DATA_DIR = Path(__file__).parent.parent / "data"
 STATIC_DIR = Path(__file__).parent / "static"
 START_TIME = time.monotonic()
-
-app = FastAPI(title="Stadium Copilot API")
-app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["*"], allow_headers=["*"])
 
 _venues: dict[str, dict] = {}
 _chunks: dict[str, list] = {}
@@ -41,8 +41,8 @@ _scenarios: dict[str, dict] = {}
 _histories: dict[str, list] = {}  # session_id -> chat history
 
 
-@app.on_event("startup")
-async def startup():
+@asynccontextmanager
+async def lifespan(app: FastAPI):
     g.load_cache()
 
     for vid in ["nyj", "mia"]:
@@ -62,6 +62,15 @@ async def startup():
         _scenarios[s["id"]] = s
 
     asyncio.create_task(_warm_cache())
+
+    yield
+
+    for sim in _sims.values():
+        await sim.stop()
+
+
+app = FastAPI(title="Stadium Copilot API", lifespan=lifespan)
+app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["*"], allow_headers=["*"])
 
 
 async def _warm_cache():
@@ -236,7 +245,6 @@ async def chat(req: ChatRequest):
 
 
 def _try_extract_route(venue: dict, message: str, sess, accessibility: bool):
-    from routing import RouteResult
     msg = message.lower()
 
     from_node = None
@@ -312,7 +320,6 @@ async def announce(req: AnnounceRequest):
 
     translations = await g.translate_announcement(req.text, langs)
 
-    payload = {"type": "announcement", "translations": translations}
     count = await session_manager.broadcast_fan_translated(req.venue_id, translations, {"type": "announcement"})
 
     await session_manager.broadcast_ops(req.venue_id, {"type": "announce_sent", "text": req.text, "count": count})

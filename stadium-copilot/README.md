@@ -1,6 +1,17 @@
 # Stadium Copilot
 
-AI-powered venue intelligence for FIFA World Cup 2026. Real-time crowd management for ops teams, multilingual fan assistant for attendees.
+**Smart Stadiums & Tournament Operations** — a GenAI-powered solution that optimizes stadium operations and enhances the FIFA World Cup 2026 experience through intelligent, real-time assistance, for both attendees and the operations staff running the venue.
+
+One shared intelligence layer, two connected surfaces: a multilingual fan assistant, and a live ops command center — both reading from and reacting to the same real-time crowd data.
+
+## Problem statement alignment
+
+| Problem statement ask | How Stadium Copilot delivers it |
+|---|---|
+| Optimize stadium operations | Live per-zone occupancy simulation, AI-generated dispatch recommendations as zones approach capacity, one-click approve-and-notify, a scenario simulator (pre-match rush, halftime surge, gate closure, full egress) for stress-testing ops response |
+| Enhance the FIFA World Cup 2026 experience | A grounded, multilingual fan assistant for wayfinding, accessibility, bag policy, and transit — plus proactive, auto-translated alerts the moment ops redirects a gate |
+| GenAI-powered | NVIDIA NIM (Llama 3.1/3.2) drives chat, dispatch reasoning, live translation, and ticket-image OCR — retrieval-grounded against real venue data, not free-form hallucination |
+| Intelligent, real-time assistance | WebSocket-pushed crowd state every 2 seconds, live dispatch generation on status change, instant fan-facing alerts — not a static chatbot bolted onto a dashboard |
 
 ## Live demo
 
@@ -24,6 +35,53 @@ Ops dashboard: `https://stadium-copilot-<hash>-el.a.run.app/ops`
 - One-click approve → NVIDIA-translated alert pushed to fans in their language
 - Scenario simulator: Pre-match Rush, Halftime Surge, Gate Closure, Full Egress
 - Incident log with zone tagging
+
+---
+
+## Testing
+
+74 automated tests covering the core logic, not just happy-path smoke checks:
+
+- **Routing** — Dijkstra shortest-path, accessible-only edge filtering, section/label lookup, unreachable-node handling
+- **Retrieval** — BM25 ranking, tag-boosted relevance, context window budgeting
+- **Simulation engine** — tick math, occupancy bounds, status-threshold consistency, deterministic replay from seed, scenario application
+- **Ops dispatch logic** — cooldown windows, global rate limiting, LLM-fallback-to-template behavior (mocked, no live API calls)
+- **Data integrity** — every venue graph edge/section resolves to a real node, every scenario references a real zone, every gate can route to every POI
+- **API layer** — FastAPI endpoint tests via `TestClient` for health, venues, ops state, announcements, and scenario triggers
+
+```bash
+cd backend && pytest tests/ -v
+```
+
+or as part of the full check:
+```bash
+make check
+```
+
+---
+
+## Code quality
+
+- **Zero lint warnings** — `ruff check .` passes clean on the entire backend; no unused imports, no dead code, no bare excepts
+- **Fully typed** — every backend module uses Python type hints end-to-end; all request/response shapes are Pydantic v2 models (`models.py`), so the API contract is enforced, not just documented
+- **No deprecated APIs** — FastAPI's modern `lifespan` context manager for startup/shutdown (including graceful sim-engine teardown), not the deprecated `on_event` hooks
+- **Modular by responsibility** — routing, retrieval, simulation, and ops-dispatch logic each live in their own module with a single job; `main.py` wires them together and stays a thin HTTP layer
+- **Files stay small and focused** — most modules are under 300 lines; nothing is a monolith
+- **Secrets never touch the repo** — API keys load from environment/`.env` only, verified by `.gitignore` and kept out of every script
+- **Every AI prompt lives in a file** — `prompts/*.md`, loaded at runtime, never inlined as a string buried in application code
+
+```bash
+cd backend && ruff check .
+```
+
+---
+
+## Accessibility
+
+- **WCAG AA color contrast** verified across both the light (fan) and dark (ops) themes — computed contrast ratios checked against text/background pairs, not just eyeballed
+- **Keyboard-operable modals** — the ticket-scan dialog traps focus on open, closes on `Escape`, and returns focus to the triggering control on close
+- **Screen-reader support** — every interactive control (inputs, selects, icon-only buttons) has an explicit `aria-label`; status is always conveyed with a text label alongside color, never color alone
+- **Visible focus states** — a consistent `:focus-visible` outline across every interactive element for keyboard navigation
 
 ---
 
@@ -116,7 +174,8 @@ stadium-copilot/
 │   ├── routing.py       # Graph load, Dijkstra, accessibility
 │   ├── sessions.py      # Fan sessions + WS manager
 │   ├── models.py        # Pydantic schemas
-│   └── warm_cache.py    # Cache pre-warmer (make warm)
+│   ├── warm_cache.py    # Cache pre-warmer (make warm)
+│   └── tests/           # pytest suite — routing, retrieval, sim, ops, API
 ├── frontend/src/
 │   ├── routes/          # Landing.tsx  FanApp.tsx  OpsApp.tsx
 │   ├── components/fan/  # Chat, TicketSnap, VenueMap, MessageBubble
