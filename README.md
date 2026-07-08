@@ -17,6 +17,8 @@ The idea started from a simple annoyance: stadiums already collect a ton of crow
 - A scenario simulator to stress-test things: pre-match rush, halftime surge, a gate closure, full egress
 - A simple incident log so staff can flag things by zone as they happen
 
+- deployed link: https://beverly-norman-origin-amp.trycloudflare.com/
+
 ## Running it locally
 
 ```bash
